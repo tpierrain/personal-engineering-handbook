@@ -64,15 +64,33 @@ When starting a new machine, I follow these steps:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    xcode-select --install
    ```
+   puis
+   ```bash
+   brew update
+   brew upgrade
+   ```
+   
 2. Install essential CLI tools (`git`, `jq`, `ripgrep`, `fd`, `htop`, `tree`, `wget`)
-3. Configure global Git identity & `.gitignore_global`
-4. Generate or restore SSH keys
-5. Configure SSH (`~/.ssh/config`)
-6. Verify SSH access to GitHub/GitLab
-7. Set up password manager and secrets storage (KeePass)
-8. Optionally, install Docker / Colima
-9. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
-10. Document any deviations from standard setup
+
+   ```bash
+    brew install \
+    git \
+    jq \
+    ripgrep \
+    fd \
+    htop \
+    tree \
+    wget
+    ```
+   
+4. Configure global Git identity & `.gitignore_global`
+5. Generate or restore SSH keys
+6. Configure SSH (`~/.ssh/config`)
+7. Verify SSH access to GitHub/GitLab
+8. Set up password manager and secrets storage (KeePass)
+9. Optionally, install Docker / Colima
+10. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
+11. Document any deviations from standard setup
 
 **Why it matters:**
 
