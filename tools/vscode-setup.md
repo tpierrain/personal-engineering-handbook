@@ -31,11 +31,11 @@ code --version
 ## 🔹 Essential Extensions
 
 ```bash
-code --install-extension eamodio.gitlens
-code --install-extension esbenp.prettier-vscode
-code --install-extension mhutchie.git-graph
-code --install-extension formulahendry.code-runner
-code --install-extension visualstudioexptteam.vscodeintellicode
+code --install-extension eamodio.gitlens # Git superpowers
+code --install-extension esbenp.prettier-vscode # automatic formating
+code --install-extension mhutchie.git-graph # git visualization
+code --install-extension formulahendry.code-runner # run code snippet or code file for multiple languages
+code --install-extension visualstudioexptteam.vscodeintellicode # IntelliCode
 ```
 
 > Optional: add more extensions as needed for specific projects. Keep the baseline minimal for longevity.
