@@ -10,24 +10,44 @@ This chapter captures the practices I follow for workstations and SSH access to 
 
 **Purpose:** secure, passwordless authentication to servers, repositories, and other services.
 
+**Principle: one machine = one key.** Never reuse a private key across machines — especially on a machine you don't own (e.g. a client-provided laptop).
+
 **Recommendations:**
 
 * Use **ed25519** keys by default (modern, secure, small).
-* Keep keys **per-machine**.
+* Keep keys **per-machine** — never copy a private key from one machine to another.
 * Never commit private keys to repositories.
-* Store keys in a **password-protected KeePass database** or OS Keychain.
+* Store the passphrase in a **password-protected KeePass database**.
+* Add the key to the macOS Keychain for daily convenience.
+* Name your keys with a meaningful context suffix (e.g. `id_ed25519_perso`, `id_ed25519_inqom`).
 
 **Example creation:**
 
 ```bash
-ssh-keygen -t ed25519 -C "your_email@example.com"
+ssh-keygen -t ed25519 -C "thomas@<machine-context>" -f ~/.ssh/id_ed25519_<context>
 ```
 
-**Why it matters:**
+**Post-creation steps:**
 
-* Enables secure GitHub, GitLab, and server access
-* Isolates machines (a compromised machine doesn’t affect others)
-* Allows signing of commits if desired
+```bash
+# Add to macOS keychain
+ssh-add --apple-use-keychain ~/.ssh/id_ed25519_<context>
+
+# Set correct permissions
+chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519_<context>
+chmod 644 ~/.ssh/id_ed25519_<context>.pub
+chmod 600 ~/.ssh/config
+```
+
+Then add the **public** key to GitHub / GitLab with a descriptive label (e.g. `thomas-mac-inqom-2025`).
+
+**Why one key per machine?**
+
+* A client machine may be reclaimed, audited, or compromised — revoking a shared key impacts all your environments.
+* Dedicated keys allow clean revocation without collateral damage.
+* Named keys on GitHub/GitLab provide traceability (which machine accessed what).
+* Follows the principle of least privilege: each context gets only the access it needs.
 
 ---
 
@@ -41,16 +61,42 @@ ssh-keygen -t ed25519 -C "your_email@example.com"
 Host github.com
   HostName github.com
   User git
-  IdentityFile ~/.ssh/id_ed25519
+  IdentityFile ~/.ssh/id_ed25519_<context>
+  IdentitiesOnly yes
   AddKeysToAgent yes
   UseKeychain yes
 ```
+
+> `IdentitiesOnly yes` ensures SSH only offers the specified key, avoiding confusion when multiple keys are present on the machine.
+
+**Multi-context example** (on a personal machine that needs access to both personal and work accounts):
+
+```
+Host github.com-perso
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_perso
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  UseKeychain yes
+
+Host github.com-work
+  HostName github.com
+  User git
+  IdentityFile ~/.ssh/id_ed25519_work
+  IdentitiesOnly yes
+  AddKeysToAgent yes
+  UseKeychain yes
+```
+
+Then clone with: `git clone git@github.com-perso:tpierrain/my-repo.git`
 
 **Why it matters:**
 
 * One place to manage SSH identities
 * Reduces friction when working with multiple hosts
 * Avoids repeated password prompts
+* Cleanly separates contexts when needed
 
 ---
 
@@ -64,12 +110,18 @@ When starting a new machine, I follow these steps:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    xcode-select --install
    ```
+   Then add Homebrew to your PATH:
+   ```bash
+   echo >> /Users/tpierrain/.zprofile
+   echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/tpierrain/.zprofile
+   eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+   ```
    puis
    ```bash
    brew update
    brew upgrade
    ```
-   
+
 2. Install essential CLI tools (`git`, `jq`, `ripgrep`, `fd`, `htop`, `tree`, `wget`)
 
    ```bash
@@ -82,11 +134,15 @@ When starting a new machine, I follow these steps:
     tree \
     wget
     ```
-   
-4. Configure global Git identity & `.gitignore_global`
-5. Generate or restore SSH keys
-6. Configure SSH (`~/.ssh/config`)
-7. Verify SSH access to GitHub/GitLab
+
+3. Configure global Git identity & `.gitignore_global`
+4. Generate a **dedicated** SSH key for this machine (see [SSH Keys](#-ssh-keys) above)
+5. Configure SSH (`~/.ssh/config`) with `IdentitiesOnly yes`
+6. Add the public key to GitHub/GitLab with a descriptive label
+7. Verify SSH access:
+   ```bash
+   ssh -T git@github.com
+   ```
 8. Set up password manager and secrets storage (KeePass)
 9. Optionally, install Docker / Colima
 10. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
@@ -100,5 +156,4 @@ When starting a new machine, I follow these steps:
 
 ---
 
-> This chapter captures the foundational practices for a secure, consistent, and maintainable workstation. It complements the handbook’s philosophy: decisions should be durable, predictable, and explicitly documented.
-
+> This chapter captures the foundational practices for a secure, consistent, and maintainable workstation. It complements the handbook's philosophy: decisions should be durable, predictable, and explicitly documented.
