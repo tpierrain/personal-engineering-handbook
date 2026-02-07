@@ -10,7 +10,7 @@ This chapter captures the practices I follow for workstations and SSH access to 
 
 **Purpose:** secure, passwordless authentication to servers, repositories, and other services.
 
-**Principle: one machine = one key.** Never reuse a private key across machines — especially on a machine you don't own (e.g. a client-provided laptop).
+**Principle: one machine = one key.** Never reuse a private key across machines — __especially on a machine you don't own (e.g. a client-provided laptop)__.
 
 **Recommendations:**
 
