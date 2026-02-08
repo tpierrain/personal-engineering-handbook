@@ -104,36 +104,14 @@ Then clone with: `git clone git@github.com-perso:tpierrain/my-repo.git`
 
 When starting a new machine, I follow these steps:
 
-1. Install Homebrew and CLI tools
+1. Install Homebrew and Xcode command-line tools
 
    ```bash
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    xcode-select --install
    ```
-   Temporarily add Homebrew to the current session (it will be permanently configured in `.zshrc` at step 3):
-   ```bash
-   eval "$(/opt/homebrew/bin/brew shellenv zsh)"
-   ```
-   Then update:
-   ```bash
-   brew update
-   brew upgrade
-   ```
 
-2. Install essential CLI tools (`git`, `jq`, `ripgrep`, `fd`, `htop`, `tree`, `wget`)
-
-   ```bash
-    brew install \
-    git \
-    jq \
-    ripgrep \
-    fd \
-    htop \
-    tree \
-    wget
-    ```
-
-3. Configure `~/.zshrc` baseline:
+2. Configure `~/.zshrc` baseline:
 
    > `~/.zshrc` is the shell configuration file that Zsh executes every time a new terminal session starts — it is the place to set environment variables, aliases, and PATH customizations.
 
@@ -160,6 +138,11 @@ When starting a new machine, I follow these steps:
    source ~/.zshrc
    ```
 
+3. Install essential CLI tools following the [CLI Tools Basics](../tools/cli-basics.md) guide:
+   ```bash
+   brew update && brew upgrade
+   brew install git jq ripgrep fd htop tree wget
+   ```
 4. Configure global Git identity & `.gitignore_global`
 5. Generate a **dedicated** SSH key for this machine (see [SSH Keys](#-ssh-keys) above)
 6. Configure SSH (`~/.ssh/config`) with `IdentitiesOnly yes`
