@@ -6,6 +6,25 @@ This chapter captures the rationale, usage, and examples for tools I use daily, 
 
 ---
 
+## 🔹 Installation
+
+All tools listed in this page can be installed at once via Homebrew:
+
+```bash
+brew install \
+  git \
+  jq \
+  ripgrep \
+  fd \
+  htop \
+  tree \
+  wget
+```
+
+> **Prerequisites:** Homebrew must be installed and available in your PATH. See the [New Machine Setup Checklist](../workstation/new-machine-checklist.md) for details.
+
+---
+
 ## 🔹 jq
 
 **Purpose:** command-line JSON processor.
@@ -115,4 +134,3 @@ wget https://example.com/archive.tar.gz
 ---
 
 > These tools form the core baseline of my CLI toolkit. Each tool is included because it reduces friction, prevents mistakes, or accelerates understanding. Together, they are a **lightweight, durable toolbox** that survives changes in machines, roles, and projects.
-
