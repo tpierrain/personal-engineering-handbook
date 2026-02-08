@@ -116,7 +116,7 @@ When starting a new machine, I follow these steps:
    echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/tpierrain/.zprofile
    eval "$(/opt/homebrew/bin/brew shellenv zsh)"
    ```
-   puis
+   Then update:
    ```bash
    brew update
    brew upgrade
@@ -136,6 +136,8 @@ When starting a new machine, I follow these steps:
     ```
 
 3. Configure `~/.zshrc` baseline:
+
+   > `~/.zshrc` is the shell configuration file that Zsh executes every time a new terminal session starts — it is the place to set environment variables, aliases, and PATH customizations.
 
    ```bash
    cat > ~/.zshrc << 'EOF'
