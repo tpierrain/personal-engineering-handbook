@@ -10,7 +10,7 @@ This chapter captures the practices I follow for workstations and SSH access to 
 
 **Purpose:** secure, passwordless authentication to servers, repositories, and other services.
 
-**Principle: one machine = one key.** Never reuse a private key across machines — __especially on a machine you don't own (e.g. a client-provided laptop)__.
+**Principle: one machine = one key.** Never reuse a private key across machines — especially on a machine you don't own (e.g. a client-provided laptop).
 
 **Recommendations:**
 
@@ -135,18 +135,45 @@ When starting a new machine, I follow these steps:
     wget
     ```
 
-3. Configure global Git identity & `.gitignore_global`
-4. Generate a **dedicated** SSH key for this machine (see [SSH Keys](#-ssh-keys) above)
-5. Configure SSH (`~/.ssh/config`) with `IdentitiesOnly yes`
-6. Add the public key to GitHub/GitLab with a descriptive label
-7. Verify SSH access:
+3. Configure `~/.zshrc` baseline:
+
+   ```bash
+   cat > ~/.zshrc << 'EOF'
+   # Locale — force CLI tools in English
+   export LANG=en_US.UTF-8
+   export LC_ALL=en_US.UTF-8
+
+   # Homebrew
+   eval "$(/opt/homebrew/bin/brew shellenv zsh)"
+
+   # Path customization
+   export PATH="$HOME/bin:$PATH"
+
+   # Aliases
+   alias ll='ls -alF'
+   alias gs='git status'
+
+   # Load other scripts
+   [[ -f "$HOME/.aliases" ]] && source "$HOME/.aliases"
+   EOF
+
+   source ~/.zshrc
+   ```
+
+   > Note: with Homebrew sourced in `.zshrc`, the line added earlier in `.zprofile` can be removed to avoid duplication.
+
+4. Configure global Git identity & `.gitignore_global`
+5. Generate a **dedicated** SSH key for this machine (see [SSH Keys](#-ssh-keys) above)
+6. Configure SSH (`~/.ssh/config`) with `IdentitiesOnly yes`
+7. Add the public key to GitHub/GitLab with a descriptive label
+8. Verify SSH access:
    ```bash
    ssh -T git@github.com
    ```
-8. Set up password manager and secrets storage (KeePass)
-9. Optionally, install Docker / Colima
-10. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
-11. Document any deviations from standard setup
+9. Set up password manager and secrets storage (KeePass)
+10. Optionally, install Docker / Colima
+11. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
+12. Document any deviations from standard setup
 
 **Why it matters:**
 
