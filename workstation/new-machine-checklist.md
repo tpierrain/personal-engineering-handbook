@@ -110,10 +110,8 @@ When starting a new machine, I follow these steps:
    /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
    xcode-select --install
    ```
-   Then add Homebrew to your PATH:
+   Temporarily add Homebrew to the current session (it will be permanently configured in `.zshrc` at step 3):
    ```bash
-   echo >> /Users/tpierrain/.zprofile
-   echo 'eval "$(/opt/homebrew/bin/brew shellenv zsh)"' >> /Users/tpierrain/.zprofile
    eval "$(/opt/homebrew/bin/brew shellenv zsh)"
    ```
    Then update:
@@ -161,8 +159,6 @@ When starting a new machine, I follow these steps:
 
    source ~/.zshrc
    ```
-
-   > Note: with Homebrew sourced in `.zshrc`, the line added earlier in `.zprofile` can be removed to avoid duplication.
 
 4. Configure global Git identity & `.gitignore_global`
 5. Generate a **dedicated** SSH key for this machine (see [SSH Keys](#-ssh-keys) above)
