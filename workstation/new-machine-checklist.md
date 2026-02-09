@@ -48,17 +48,25 @@ This checklist captures the steps I follow to ensure a secure, consistent, and r
    brew install git jq ripgrep fd htop tree wget
    ```
 
-4. Configure global Git identity & `.gitignore_global`
+4. Configure macOS system settings — see [macOS Configuration](./macos-configuration.md) for details:
+   - Finder preferences (show extensions, path bar, etc.)
+   - Security settings (FileVault, Firewall)
+   - Install essential GUI apps via Homebrew Cask
+   - Configure Terminal/iTerm2
 
-5. Generate a **dedicated** SSH key, configure `~/.ssh/config`, and verify access — see [Security & SSH Basics](../security/ssh-basics.md) for step-by-step instructions
+5. Configure global Git identity & `.gitignore_global`
 
-6. Set up password manager and secrets storage (KeePass)
+6. Generate a **dedicated** SSH key, configure `~/.ssh/config`, and verify access — see [Security & SSH Basics](../security/ssh-basics.md) for step-by-step instructions
 
-7. Optionally, install Docker / Colima
+7. Set up password manager and secrets storage (KeePass)
 
-8. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
+8. Install and configure Claude Code — see [Claude Code Setup](../ai-tools/claude-code-setup.md) for step-by-step instructions
 
-9. Document any deviations from standard setup
+9. Optionally, install Docker / Colima
+
+10. Organize workspace folders (`~/dev/personal`, `~/dev/work`, etc.)
+
+11. Document any deviations from standard setup
 
 ---
 

@@ -123,6 +123,7 @@ The structure follows intent, not technology.
 personal-engineering-handbook/
 ├── principles/        # Engineering and architectural principles
 ├── tools/             # Tooling rationale and usage conventions
+├── ai-tools/          # AI assistants setup and practices
 ├── security/          # Security baseline and practices
 ├── workstation/       # Machine setup and lifecycle
 └── README.md
